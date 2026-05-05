@@ -20,9 +20,7 @@ const items = computed<NavItem[]>(() => {
   ]
 
   if (isAuthenticated.value) {
-    baseMenu.push(
-      { label: 'Mon profil', route: '/', class: 'md:hidden' },
-    )
+    baseMenu.push({ label: 'Mon profil', route: '/', class: 'md:hidden' })
   }
   if (!isAuthenticated.value && isMobile.value) {
     baseMenu.push(
@@ -81,15 +79,12 @@ const items = computed<NavItem[]>(() => {
 
     <template #end>
       <div class="flex items-center gap-4">
-
-          <button class="flex items-center gap-4" aria-label="Panier">
-            <OverlayBadge v-if="0 > 0" :value="0" severity="danger">
-              <i class="pi pi-shopping-cart text-xl" />
-            </OverlayBadge>
-            <i v-else class="pi pi-shopping-cart text-xl" />
-          </button>
-
-
+        <button class="flex items-center gap-4" aria-label="Panier">
+          <OverlayBadge v-if="0 > 0" :value="0" severity="danger">
+            <i class="pi pi-shopping-cart text-xl" />
+          </OverlayBadge>
+          <i v-else class="pi pi-shopping-cart text-xl" />
+        </button>
 
         <div class="hidden md:flex h-6 w-px bg-surface-300 dark:bg-surface-600" />
 
@@ -99,7 +94,12 @@ const items = computed<NavItem[]>(() => {
         </div>
 
         <div v-else class="hidden md:flex items-center gap-4">
-          <Button label="Discussions" severity="info" icon="pi pi-send text-xl" class="hidden md:inline-flex md:items-center" />
+          <Button
+            label="Discussions"
+            severity="info"
+            icon="pi pi-send text-xl"
+            class="hidden md:inline-flex md:items-center"
+          />
           <router-link to="/">
             <Avatar :image="avatarImage" shape="circle" size="large" class="flex" />
           </router-link>
