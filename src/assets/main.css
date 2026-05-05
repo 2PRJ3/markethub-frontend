@@ -1,5 +1,12 @@
-@import "tailwindcss";
-@import "tailwindcss-primeui";
-@import "primeicons/primeicons.css";
+@import 'tailwindcss';
+@import 'tailwindcss-primeui';
+@import 'primeicons/primeicons.css';
 
 @layer theme, base, primevue, components, utilities;
+
+.p-menubar-root-list .p-menubar-item.p-focus > .p-menubar-item-content,
+.p-menubar-root-list .p-menubar-item[data-p-focused='true'] > .p-menubar-item-content,
+.p-menubar-root-list .p-menubar-item.p-menubar-item-active > .p-menubar-item-content,
+.p-menubar-root-list .p-menubar-item:not(.p-disabled) > .p-menubar-item-content:hover {
+  background: transparent !important;
+}
