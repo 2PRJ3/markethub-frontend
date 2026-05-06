@@ -6,12 +6,12 @@ import Button from 'primevue/button'
 </script>
 <template>
   <div class="flex items-center justify-center w-md gap-3">
-    <IconField class="flex-1 ">
+    <IconField class="flex-1">
       <InputIcon class="pi pi-search" />
       <InputText
         type="search"
         placeholder="Rechercher un service (ex: Design, Tutorat, Rédaction...)"
-        class="w-full rounded-lg focus:outline-none truncate"
+        class="w-full rounded-lg focus:border-[#3525CD] truncate"
         variant="outlined"
       />
     </IconField>
