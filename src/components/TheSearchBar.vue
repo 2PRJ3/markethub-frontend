@@ -5,7 +5,7 @@ import InputIcon from 'primevue/inputicon'
 import Button from 'primevue/button'
 </script>
 <template>
-  <div class="flex items-center justify-center w-md gap-3">
+  <div class="flex items-center justify-center md:w-md w-full gap-3">
     <IconField class="flex-1">
       <InputIcon class="pi pi-search" />
       <InputText
