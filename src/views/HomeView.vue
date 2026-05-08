@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import TheSearchBar from '@/components/TheSearchBar.vue'
 import TheCard from '@/components/TheCard.vue'
+import TheNavbar from '@/components/TheNavbar.vue'
 </script>
 
 <template>
+  <header>
+    <TheNavbar />
+  </header>
   <section class="flex flex-col items-center justify-center gap-5 px-4 py-20">
     <h1
       class="text-center text-2xl font-bold text-gray-900 sm:text-5xl md:text-3xl lg:text-6xl max-w-4xl leading-tight tracking-tight"
