@@ -89,7 +89,10 @@ const items = computed<NavItem[]>(() => {
         <div class="hidden md:flex h-6 w-px bg-surface-300 dark:bg-surface-600" />
 
         <div class="hidden md:flex items-center gap-4" v-if="!isAuthenticated">
-          <Button type="button" label="Connexion" severity="secondary" to="/login"/>
+          <router-link to="/login">
+            <Button type="button" label="Connexion" severity="secondary" />
+          </router-link>
+
           <Button label="S'inscrire" icon="pi pi-user-plus" class="bg-[#2921A3]" />
         </div>
 
