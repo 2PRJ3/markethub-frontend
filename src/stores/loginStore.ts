@@ -18,8 +18,9 @@ export const useLoginStore = defineStore('loginStore', () => {
       params.append('email', email)
       params.append('password', password)
 
-      const { data} = await api.post<TokenResponse>('/auth/login', params, {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      const { data } = await api.post<TokenResponse>('/auth/login', {
+        email: email,
+        password: password,
       })
 
       await fetchUserProfile()
@@ -34,7 +35,7 @@ export const useLoginStore = defineStore('loginStore', () => {
 
   async function fetchUserProfile(): Promise<void> {
     try{
-      const { data} = await api.get<User>('/auth/me')
+      const { data } = await api.get<User>('/auth/me')
       user.value = data
     } catch (error) {
       user.value = null

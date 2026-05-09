@@ -5,13 +5,16 @@ import Menubar from 'primevue/menubar'
 import OverlayBadge from 'primevue/overlaybadge'
 import Button from 'primevue/button'
 import Avatar from 'primevue/avatar'
+import { useLoginStore } from '@/stores/loginStore'
 import type { NavItem } from '@/types/nav.ts'
 
 import avatarImage from '@/assets/pictures/avatar.png'
 
-const isAuthenticated = ref(false)
+const loginStore = useLoginStore()
+
+const isAuthenticated = loginStore.isAuthenticated
 const isMobile = useMediaQuery('(max-width: 960px)')
-console.log(isAuthenticated.value)
+
 const items = computed<NavItem[]>(() => {
   const baseMenu: NavItem[] = [
     { label: 'Accueil', route: '/' },
@@ -19,10 +22,10 @@ const items = computed<NavItem[]>(() => {
     { label: 'Contact', route: '/' },
   ]
 
-  if (isAuthenticated.value) {
+  if (isAuthenticated) {
     baseMenu.push({ label: 'Mon profil', route: '/', class: 'md:hidden' })
   }
-  if (!isAuthenticated.value && isMobile.value) {
+  if (!isAuthenticated && isMobile.value) {
     baseMenu.push(
       { separator: true, class: 'border flex items-center justify-center w-3xs' },
       { label: 'Connexion', route: '/', class: 'bg-' },
