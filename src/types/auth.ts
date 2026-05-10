@@ -8,3 +8,10 @@ export interface User {
   id: number | string;
   email: string;
 }
+
+export interface UserCreate{
+  first_name: string
+  last_name: string
+  email: string
+  password: string
+}
