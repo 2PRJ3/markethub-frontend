@@ -2,6 +2,7 @@
 import TheSearchBar from '@/components/TheSearchBar.vue'
 import TheCard from '@/components/TheCard.vue'
 import TheNavbar from '@/components/TheNavbar.vue'
+import TheBanner from '@/components/TheBanner.vue'
 </script>
 
 <template>
@@ -32,4 +33,11 @@ import TheNavbar from '@/components/TheNavbar.vue'
       <TheCard />
     </div>
   </section>
+
+  <TheBanner
+    title="Vous avez un talent ?"
+    description="Commencez à proposer vos services dès aujourd'hui et arrondissez vos fins de mois."
+    ctaLabel="Devener vendeur"
+    ctaTo="/login"
+  />
 </template>
