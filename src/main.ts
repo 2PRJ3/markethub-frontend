@@ -7,6 +7,7 @@ import Aura from '@primevue/themes/aura'
 
 import App from './App.vue'
 import router from './router'
+import { useLoginStore } from '@/stores/loginStore'
 
 const app = createApp(App)
 
@@ -23,4 +24,6 @@ app.use(PrimeVue, {
     },
   },
 })
+const loginStore = useLoginStore()
+await loginStore.fetchUserProfile()
 app.mount('#app')
