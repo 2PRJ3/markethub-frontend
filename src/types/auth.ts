@@ -15,6 +15,19 @@ export interface User {
   study_sector: string
 }
 
+export interface UserUpdatePayload {
+  first_name?: string;
+  last_name?: string;
+  university?: string | null;
+  study_sector?: string | null;
+  bio?: string | null;
+  avatar_url?: string | null;
+}
+
+export interface PasswordUpdatePayload {
+  current_password: string;
+  new_password: string;
+}
 export interface UserCreate{
   first_name: string
   last_name: string

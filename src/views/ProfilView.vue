@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import Panel from 'primevue/panel'
 import Avatar from 'primevue/avatar'
 import Divider from 'primevue/divider'
@@ -14,6 +14,8 @@ import avatarImage from '@/assets/pictures/avatar.png'
 
 import { storeToRefs } from 'pinia'
 import { useLoginStore } from '@/stores/loginStore'
+import TheDialog from '@/components/TheDialog.vue'
+import TheFormUpdate from '@/components/TheFormUpdate.vue'
 
 const loginStore = useLoginStore()
 const { user } = storeToRefs(loginStore)
@@ -25,6 +27,7 @@ const { user } = storeToRefs(loginStore)
 const roleLabel = computed(() => (user.value?.role === 'admin' ? 'Administrateur' : 'Étudiant'))
 //
 // const avatar = computed(() => user.value?.avatar_url || avatarFallback)
+const editVisible = ref(false)
 </script>
 
 <template>
@@ -56,8 +59,21 @@ const roleLabel = computed(() => (user.value?.role === 'admin' ? 'Administrateur
           <Panel header="Mes informations personnel" toggleable class="">
             <Divider />
             <template #icons>
-              <Button icon="pi pi-pencil" severity="secondary" rounded text />
+              <Button
+                icon="pi pi-pencil"
+                severity="secondary"
+                rounded
+                text
+                @click="editVisible = true"
+              />
             </template>
+            <TheDialog v-model:visible="editVisible" title="Modifier mon profil">
+              <TheFormUpdate
+                :key="String(editVisible)"
+                @saved="editVisible = false"
+                @cancel="editVisible = false"
+              />
+            </TheDialog>
             <div class="flex flex-col gap-5">
               <div class="flex flex-row justify-around">
                 <div class="flex flex-col">
