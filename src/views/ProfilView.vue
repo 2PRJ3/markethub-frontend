@@ -32,10 +32,10 @@ const roleLabel = computed(() => (user.value?.role === 'admin' ? 'Administrateur
     <TheNavbar />
   </header>
   <Tabs value="0">
-    <TabList class="flex items-center">
-      <Tab value="0">Mon profil</Tab>
-      <Tab value="1">Mes services</Tab>
-      <Tab value="2">Historiques des services</Tab>
+    <TabList class="flex items-center text-surface-700">
+      <Tab value="0" class="text-surface-700">Mon profil</Tab>
+      <Tab value="1" class="text-surface-700">Mes services</Tab>
+      <Tab value="2" class="text-surface-700">Historiques des services</Tab>
     </TabList>
     <TabPanels>
       <TabPanel value="0">
@@ -66,7 +66,7 @@ const roleLabel = computed(() => (user.value?.role === 'admin' ? 'Administrateur
                 </div>
                 <div class="flex flex-col">
                   <span class="font-semibold">Nom</span>
-                  <span>{{ user?.last_name }}</span>
+                  <span>{{ user?.last_name.toUpperCase() }}</span>
                 </div>
                 <div class="flex flex-col">
                   <span class="font-semibold">Université</span>
