@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import api from '@/api/axios'
 import type { UserCreate } from '@/types/auth.ts'
 import { SignInValidationError, type ValidationError } from '@/types/validation'
@@ -36,7 +36,7 @@ export const useSignInStore = defineStore('signInStore', () => {
       const detail = error?.response?.data?.detail
 
       if (Array.isArray(detail)) {
-        errors.value = detail.map((d: any) => ({
+        errors.value = detail.map((d) => ({
           field: Array.isArray(d.loc) ? String(d.loc[d.loc.length - 1]) : 'global',
           message: d.msg ?? "Erreur de validation",
         }))

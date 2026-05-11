@@ -23,13 +23,13 @@ const items = computed<NavItem[]>(() => {
   ]
 
   if (isAuthenticated) {
-    baseMenu.push({ label: 'Mon profil', route: '/', class: 'md:hidden' })
+    baseMenu.push({ label: 'Mon profil', route: '/profiluser', class: 'md:hidden' })
   }
   if (!isAuthenticated && isMobile.value) {
     baseMenu.push(
       { separator: true, class: 'border flex items-center justify-center w-3xs' },
-      { label: 'Connexion', route: '/', class: 'bg-' },
-      { label: "S'inscrire", route: '/' },
+      { label: 'Connexion', route: '/login', class: 'bg-' },
+      { label: "S'inscrire", route: '/signin' },
     )
   }
   return baseMenu
@@ -71,7 +71,7 @@ const items = computed<NavItem[]>(() => {
           :class="[
             'flex items-center justify-center px-3 py-2 transition-colors',
             !isActive
-              ? 'text-[#ffff] font-semibold border-b-2 border-[#2921A3]'
+              ? 'text-surface-700 dark:text-surface-200 hover:text-[#2921A3]'
               : 'text-surface-700 dark:text-surface-200 hover:text-[#2921A3]',
           ]"
         >
@@ -107,7 +107,7 @@ const items = computed<NavItem[]>(() => {
             icon="pi pi-send text-xl"
             class="hidden md:inline-flex md:items-center"
           />
-          <router-link to="/">
+          <router-link to="/profiluser">
             <Avatar :image="avatarImage" shape="circle" size="large" class="flex" />
           </router-link>
         </div>

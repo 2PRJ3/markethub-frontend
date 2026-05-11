@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ConnexionView from '../views/ConnexionView.vue'
 import SignInView from '@/views/SignInView.vue'
+import ProfilView from '@/views/ProfilView.vue'
+import { useLoginStore } from '@/stores/loginStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,11 +17,19 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: ConnexionView,
+      meta: { guestOnly: true },
     },
     {
       path: '/signin',
       name: 'signin',
       component: SignInView,
+      meta: { guestOnly: true },
+    },
+    {
+      path: '/profiluser',
+      name: 'profiluser',
+      component: ProfilView,
+      meta: { requiresAuth: true}
     },
     {
       path: '/about',
@@ -32,4 +42,18 @@ const router = createRouter({
   ],
 })
 
+router.beforeEach(async (to) =>{
+  const loginStore = useLoginStore()
+
+  await loginStore.initAuth()
+
+  if (to.meta.requiresAuth && !loginStore.isAuthenticated){
+    return { name: 'login', query: { redirect: to.fullPath } }
+  }
+
+  if (to.meta.guestOnly && loginStore.isAuthenticated){
+    return { name: 'profiluser'}
+  }
+  return true
+})
 export default router

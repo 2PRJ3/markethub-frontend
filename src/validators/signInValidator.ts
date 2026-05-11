@@ -1,11 +1,6 @@
 import type { ValidationError} from '@/types/validation'
 import { validatePassword, validateEmail } from '@/validators/authValidation'
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-
-export const ALLOWED_SPECIAL_CHARS = '@$!%*?&'
-
 export function validateFirstName(firstName: string): ValidationError[] {
   const errors: ValidationError[] = []
   const trimmed = firstName?.trim() ?? ''
