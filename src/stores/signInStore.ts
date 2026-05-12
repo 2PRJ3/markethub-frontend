@@ -30,7 +30,7 @@ export const useSignInStore = defineStore('signInStore', () => {
     try {
       const { data } = await api.post<UserCreate>('/users', dataUser)
       user.value = data
-    }catch (error) {
+    }catch (error: any) {
       user.value = null
 
       const detail = error?.response?.data?.detail
