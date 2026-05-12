@@ -50,7 +50,7 @@ export const useUpdateUserStore = defineStore('updateUserStore', () => {
     error.value = null
 
     try {
-      await api.patch(`/users/me/change-password`, payload)
+      await api.post(`/users/me/change-password`, payload)
     } catch(err: any) {
       const status = err?.response?.status
       if (status === 401 || status === 403) {

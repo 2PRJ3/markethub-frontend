@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import TheFormLogin from '@/components/TheFormLogin.vue'
+import TheFormLogin from '@/components/forms/TheFormLogin.vue'
 
 const router = useRouter()
 
