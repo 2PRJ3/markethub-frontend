@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import api from '@/api/axios'
-import type { User, TokenResponse} from '@/types/auth'
-
+import type { User, TokenResponse } from '@/types/auth'
 
 export const useLoginStore = defineStore('loginStore', () => {
   const user = ref<User | null>(null)
@@ -16,9 +15,8 @@ export const useLoginStore = defineStore('loginStore', () => {
   async function handleLogin(email: string, password: string): Promise<void> {
     loading.value = true
     try {
-      await api.post('/auth/login', {email, password})
+      await api.post('/auth/login', { email, password })
       await fetchUserProfile()
-
     } catch (error) {
       user.value = null
       throw error
@@ -28,7 +26,7 @@ export const useLoginStore = defineStore('loginStore', () => {
   }
 
   async function fetchUserProfile(): Promise<void> {
-    try{
+    try {
       const { data } = await api.get<User>('/auth/me')
       user.value = data
     } catch (error) {
@@ -43,7 +41,7 @@ export const useLoginStore = defineStore('loginStore', () => {
     if (isInitialized.value) return
     if (initPromise) return initPromise
 
-    initPromise = fetchUserProfile().finally(()=>{
+    initPromise = fetchUserProfile().finally(() => {
       initPromise = null
     })
     return initPromise
@@ -52,7 +50,7 @@ export const useLoginStore = defineStore('loginStore', () => {
   async function logout(): Promise<void> {
     try {
       await api.post<TokenResponse>('/auth/logout')
-    }finally {
+    } finally {
       user.value = null
       isInitialized.value = false
     }

@@ -25,7 +25,7 @@ function handleClick() {
 }
 </script>
 <template>
-  <div class="mx-auto w-full  px-4 sm:px-6 lg:px-8 max-w-6xl">
+  <div class="mx-auto w-full px-4 sm:px-6 lg:px-8 max-w-6xl">
     <section
       class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between px-6 py-5 sm:px-8 sm:py-6 rounded-2xl bg-indigo-50"
       aria-label="Devenir vendeur sur MarketHub"

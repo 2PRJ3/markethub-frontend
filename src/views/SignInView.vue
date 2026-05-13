@@ -5,7 +5,7 @@ import TheFormSignIn from '@/components/forms/TheFormSignIn.vue'
 const router = useRouter()
 
 const onSignSuccess = () => {
-  router.push({name: 'login'})
+  router.push({ name: 'login' })
 }
 </script>
 <template>
@@ -18,7 +18,9 @@ const onSignSuccess = () => {
       </div>
     </div>
     <div class="bg-[#4F46E5] hidden w-3xl h-screen md:flex flex-col items-center justify-center">
-      <span class="font-extrabold text-white text-2xl leading-tight">Rejoins d'autres étudiants comme toi afin de s'entraider </span>
+      <span class="font-extrabold text-white text-2xl leading-tight"
+        >Rejoins d'autres étudiants comme toi afin de s'entraider
+      </span>
     </div>
   </div>
 </template>
