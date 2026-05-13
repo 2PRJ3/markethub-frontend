@@ -1,0 +1,65 @@
+name: CI/CD frontend
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  NODE_VERSION: '20'
+
+
+jobs:
+  lint-check-job:
+    name: Lint & Type Check
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node JS
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install depedencies
+        run: npm ci
+
+      - name: Check lint
+        run: npm run lint:check
+
+      - name: Check type
+        run: npm run type-check
+
+      - name: Check format
+        run: npm run format:check
+
+  build-job:
+    name: Build
+    runs-on: ubuntu-24.04
+    needs: lint-check-job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node JS
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production
+        run: npm run build
+
+      - name: Upload artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
