@@ -29,7 +29,7 @@ const router = createRouter({
       path: '/profiluser',
       name: 'profiluser',
       component: ProfilView,
-      meta: { requiresAuth: true}
+      meta: { requiresAuth: true },
     },
     {
       path: '/about',
@@ -42,17 +42,17 @@ const router = createRouter({
   ],
 })
 
-router.beforeEach(async (to) =>{
+router.beforeEach(async (to) => {
   const loginStore = useLoginStore()
 
   await loginStore.initAuth()
 
-  if (to.meta.requiresAuth && !loginStore.isAuthenticated){
+  if (to.meta.requiresAuth && !loginStore.isAuthenticated) {
     return { name: 'login', query: { redirect: to.fullPath } }
   }
 
-  if (to.meta.guestOnly && loginStore.isAuthenticated){
-    return { name: 'profiluser'}
+  if (to.meta.guestOnly && loginStore.isAuthenticated) {
+    return { name: 'profiluser' }
   }
   return true
 })

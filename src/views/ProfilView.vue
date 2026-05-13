@@ -15,7 +15,8 @@ import avatarImage from '@/assets/pictures/avatar.png'
 import { storeToRefs } from 'pinia'
 import { useLoginStore } from '@/stores/loginStore'
 import TheDialog from '@/components/TheDialog.vue'
-import TheFormUpdate from '@/components/TheFormUpdate.vue'
+import TheFormUpdate from '@/components/forms/TheFormUpdate.vue'
+import TheFormPassword from '@/components/forms/TheFormPassword.vue'
 
 const loginStore = useLoginStore()
 const { user } = storeToRefs(loginStore)
@@ -28,6 +29,7 @@ const roleLabel = computed(() => (user.value?.role === 'admin' ? 'Administrateur
 //
 // const avatar = computed(() => user.value?.avatar_url || avatarFallback)
 const editVisible = ref(false)
+const passwordEditVisible = ref(false)
 </script>
 
 <template>
@@ -44,7 +46,7 @@ const editVisible = ref(false)
       <TabPanel value="0">
         <section class="flex flex-col gap-5 m-5">
           <Panel>
-            <div class="flex gap-5">
+            <div class="flex items-center gap-5">
               <div>
                 <Avatar :image="avatarImage" shape="circle" size="large" class="flex" />
               </div>
@@ -54,6 +56,16 @@ const editVisible = ref(false)
                 <p>{{ roleLabel }}</p>
               </div>
             </div>
+            <div class="flex items-center justify-end">
+              <Button label="Changer de mot de passe" @click="passwordEditVisible = true" />
+            </div>
+            <TheDialog v-model:visible="passwordEditVisible" title="Modifier votre mot de passe">
+              <TheFormPassword
+                :key="String(passwordEditVisible)"
+                @saved="passwordEditVisible = false"
+                @cancel="passwordEditVisible = false"
+              />
+            </TheDialog>
           </Panel>
 
           <Panel header="Mes informations personnel" toggleable class="">

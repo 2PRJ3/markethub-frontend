@@ -1,21 +1,21 @@
-import type { ValidationError} from '@/types/validation'
+import type { ValidationError } from '@/types/validation'
 import { validatePassword, validateEmail } from '@/validators/authValidation'
 
 export function validateFirstName(firstName: string): ValidationError[] {
   const errors: ValidationError[] = []
   const trimmed = firstName?.trim() ?? ''
 
-  if (!trimmed){
+  if (!trimmed) {
     errors.push({ field: 'first_name', message: 'Le prénom est requis' })
-  }else if (trimmed.length < 2){
+  } else if (trimmed.length < 2) {
     errors.push({
       field: 'first_name',
-      message: 'Le prénom doit contenir au moins 2 caractères.'
+      message: 'Le prénom doit contenir au moins 2 caractères.',
     })
-  }else if (trimmed.length > 50){
+  } else if (trimmed.length > 50) {
     errors.push({
       field: 'first_name',
-      message:'Le prénom ne peut pas dépasser 50 caractères.'
+      message: 'Le prénom ne peut pas dépasser 50 caractères.',
     })
   }
   return errors
@@ -46,12 +46,11 @@ export function validateSignInFields(
   lastName: string,
   email: string,
   password: string,
-): ValidationError[]{
+): ValidationError[] {
   return [
     ...validateFirstName(firstName),
     ...validateLastName(lastName),
     ...validateEmail(email),
-    ...validatePassword(password)
+    ...validatePassword(password),
   ]
 }
-

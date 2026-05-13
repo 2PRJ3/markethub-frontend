@@ -105,7 +105,12 @@ async function handleSubmit() {
 
   try {
     await updateUserStore.updateProfile(cleanPayload.value)
-    toast.add({severity: 'success', summary:'Profil mis à jour', detail:'Vos informations ont bien été enregistrées', life:3000})
+    toast.add({
+      severity: 'success',
+      summary: 'Profil mis à jour',
+      detail: 'Vos informations ont bien été enregistrées',
+      life: 3000,
+    })
     emit('saved')
   } catch {
     errorMessage.value = updateUserStore.error

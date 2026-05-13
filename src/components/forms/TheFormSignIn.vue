@@ -4,7 +4,7 @@ import { useSignInStore } from '@/stores/signInStore'
 import Password from 'primevue/password'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
-import { SignInValidationError } from '@/types/validation.ts'
+import { SignInValidationError } from '@/types/validation.js'
 
 const signInStore = useSignInStore()
 const first_name = ref<string>('')
