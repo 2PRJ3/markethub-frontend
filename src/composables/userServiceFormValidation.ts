@@ -15,7 +15,7 @@ export function validateStep(step: StepKey, draft: ServiceDraft): StepValidation
     }
 
     if (draft.category_id === null) {
-      errors.category_id = 'Chosis une catégorie'
+      errors.category_id = 'Chosissez  une catégorie'
     }
   }
 

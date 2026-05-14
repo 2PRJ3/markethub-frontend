@@ -74,8 +74,8 @@ export const useServiceStore= defineStore('serviceStore', () => {
   }
 
   async function uploadImageToCloudinary(file: File): Promise<string> {
-    const cloudName = import.meta.env.CLOUDINARY_NAME
-    const preset = import.meta.env.CLOUDINARY_UPLOAD_PRESET
+    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+    const preset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
     if (!cloudName || !preset) {
       throw new Error('Configuration Cloudinary manquante (.env)')
     }
