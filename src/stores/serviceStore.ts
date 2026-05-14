@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
-import api from "@/api/axios"
+import api from '@/api/axios'
 import { validateStep } from '@/composables/userServiceFormValidation.ts'
 
-import type { ServiceRead, ServiceDraft, StepKey, ServiceCreatePayload, ServiceSummary } from '@/types/service'
+import type { ServiceRead, ServiceDraft, StepKey, ServiceCreatePayload } from '@/types/service'
 interface CloudinaryUploadResponse {
   secure_url: string
   public_id: string
@@ -17,15 +17,15 @@ const emptyDraft = (): ServiceDraft => ({
   price: null,
   description: '',
   image_file: null,
-  image_preview: null
+  image_preview: null,
 })
 
-export const useServiceStore= defineStore('serviceStore', () => {
+export const useServiceStore = defineStore('serviceStore', () => {
   const draft = ref<ServiceDraft>(emptyDraft())
   const currentStep = ref<StepKey>(1)
   const stepErrors = ref<Record<string, string>>({})
 
-  const currentService = ref<ServiceRead | null >(null)
+  const currentService = ref<ServiceRead | null>(null)
 
   const loading = ref<boolean>(false)
 
@@ -34,16 +34,16 @@ export const useServiceStore= defineStore('serviceStore', () => {
     return valid
   })
 
-  function validateCurrentStep():boolean {
+  function validateCurrentStep(): boolean {
     const { valid, errors } = validateStep(currentStep.value, draft.value)
     stepErrors.value = errors
     return valid
   }
 
   function goToNextStep(): boolean {
-    if(!validateCurrentStep()) return false
-    if(currentStep.value < 3){
-      currentStep.value = (currentStep.value + 1 ) as StepKey
+    if (!validateCurrentStep()) return false
+    if (currentStep.value < 3) {
+      currentStep.value = (currentStep.value + 1) as StepKey
       stepErrors.value = {}
     }
     return true
@@ -57,10 +57,10 @@ export const useServiceStore= defineStore('serviceStore', () => {
   }
 
   function setImage(file: File | null): void {
-     if (draft.value.image_preview) {
-       URL.revokeObjectURL(draft.value.image_preview);
-     }
-     draft.value.image_file = file
+    if (draft.value.image_preview) {
+      URL.revokeObjectURL(draft.value.image_preview)
+    }
+    draft.value.image_file = file
     draft.value.image_preview = file ? URL.createObjectURL(file) : null
   }
 
@@ -84,9 +84,11 @@ export const useServiceStore= defineStore('serviceStore', () => {
     formData.append('upload_preset', preset)
 
     const { data } = await axios.post<CloudinaryUploadResponse>(
-      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData, {
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+      formData,
+      {
         headers: { 'Content-Type': 'multipart/form-data' },
-      }
+      },
     )
     return data.secure_url
   }
@@ -126,9 +128,17 @@ export const useServiceStore= defineStore('serviceStore', () => {
     }
   }
   return {
-    draft, currentStep, stepErrors, currentService, loading,
-    canGoNext, validateCurrentStep, goToNextStep, goToPreviousStep,
-    setImage,resetDraft, createService,
-
+    draft,
+    currentStep,
+    stepErrors,
+    currentService,
+    loading,
+    canGoNext,
+    validateCurrentStep,
+    goToNextStep,
+    goToPreviousStep,
+    setImage,
+    resetDraft,
+    createService,
   }
 })

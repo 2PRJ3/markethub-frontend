@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import FileUpload, { type FileUploadSelectEvent, type FileUploadRemoveEvent } from 'primevue/fileupload'
+import FileUpload, {
+  type FileUploadSelectEvent,
+  type FileUploadRemoveEvent,
+} from 'primevue/fileupload'
 defineProps<{
   labelTitle?: string
   maxSize?: number
