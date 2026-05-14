@@ -4,7 +4,15 @@ import axios from 'axios'
 import api from '@/api/axios'
 import { validateStep } from '@/composables/userServiceFormValidation.ts'
 
-import type { ServiceRead, ServiceDraft, StepKey, ServiceCreatePayload } from '@/types/service'
+import type {
+  ServiceRead,
+  ServiceDraft,
+  StepKey,
+  ServiceCreatePayload,
+  ServiceListParams,
+  PaginatedServices,
+  ServiceSummary,
+} from '@/types/service'
 interface CloudinaryUploadResponse {
   secure_url: string
   public_id: string
@@ -25,7 +33,9 @@ export const useServiceStore = defineStore('serviceStore', () => {
   const currentStep = ref<StepKey>(1)
   const stepErrors = ref<Record<string, string>>({})
 
+  const services = ref<ServiceSummary[]>([])
   const currentService = ref<ServiceRead | null>(null)
+  const pagination = ref({ page: 1, page_size: 12, total: 0, total_pages: 0 })
 
   const loading = ref<boolean>(false)
 
@@ -127,8 +137,36 @@ export const useServiceStore = defineStore('serviceStore', () => {
       loading.value = false
     }
   }
+  async function fetchServices(params: ServiceListParams = {}): Promise<void> {
+    loading.value = true
+    try {
+      const skip =
+        ((params.page ?? pagination.value.page) - 1) *
+        (params.page_size ?? pagination.value.page_size)
+      const limit = params.page_size ?? pagination.value.page_size
+
+      const { data } = await api.get<ServiceSummary[]>('/services', {
+        params: { skip, limit },
+      })
+
+      services.value = data
+      pagination.value = {
+        page: params.page ?? pagination.value.page,
+        page_size: limit,
+        total: data.length,
+        total_pages: 1,
+      }
+    } catch (error) {
+      console.error('Fetch services failed:', error)
+      services.value = []
+      throw error
+    } finally {
+      loading.value = false
+    }
+  }
   return {
     draft,
+    services,
     currentStep,
     stepErrors,
     currentService,
@@ -140,5 +178,6 @@ export const useServiceStore = defineStore('serviceStore', () => {
     setImage,
     resetDraft,
     createService,
+    fetchServices
   }
 })

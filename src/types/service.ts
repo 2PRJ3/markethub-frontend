@@ -12,8 +12,10 @@ export interface SellerSummary {
   id: number
   first_name: string
   last_name: string
-  avatar_url: string | null
   university: string | null
+  bio: string | null
+  avatar_url: string | null
+  study_sector: string | null
 }
 
 export interface ServiceRead {
@@ -22,7 +24,7 @@ export interface ServiceRead {
   category_id: number
   title: string
   description: string
-  price: number
+  price: string
   image_url: string | null
   status: ServiceStatus
   average_rating: number
@@ -53,11 +55,12 @@ export interface ServiceUpdatePayload {
 export interface ServiceSummary {
   id: number
   title: string
-  price: number
+  price: string
   image_url: string | null
   average_rating: number
   reviews_count: number
   category?: Category
+  seller?: SellerSummary
 }
 
 export interface PaginatedServices {
@@ -80,4 +83,11 @@ export interface ServiceDraft {
 export interface StepValidation {
   valid: boolean
   errors: Record<string, string>
+}
+export interface ServiceListParams {
+  page?: number
+  page_size?: number
+  search?: string
+  category_id?: number
+  status?: ServiceStatus
 }
