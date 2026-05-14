@@ -38,6 +38,6 @@ import TheBanner from '@/components/TheBanner.vue'
     title="Vous avez un talent ?"
     description="Commencez à proposer vos services dès aujourd'hui et arrondissez vos fins de mois."
     ctaLabel="Devener vendeur"
-    ctaTo="/login"
+    ctaTo="/create-service"
   />
 </template>
