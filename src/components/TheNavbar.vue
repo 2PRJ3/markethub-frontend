@@ -18,7 +18,7 @@ const isMobile = useMediaQuery('(max-width: 960px)')
 const items = computed<NavItem[]>(() => {
   const baseMenu: NavItem[] = [
     { label: 'Accueil', route: '/' },
-    { label: 'Catégories', route: '/' },
+    { label: 'Catalogue', route: '/catalogue' },
     { label: 'Contact', route: '/' },
   ]
 
@@ -66,17 +66,17 @@ const items = computed<NavItem[]>(() => {
       </svg>
     </template>
     <template #item="{ item }">
-      <router-link v-if="item.route" :to="item.route" v-slot="{ isActive }" custom>
-        <a
+      <router-link v-if="item.route" :to="item.route" v-slot="{ isActive }">
+        <span
           :class="[
-            'flex items-center justify-center px-3 py-2 transition-colors',
+            'flex items-center justify-center px-3 py-2 transition-colors cursor-pointer',
             !isActive
               ? 'text-surface-700 dark:text-surface-200 hover:text-[#2921A3]'
               : 'text-surface-700 dark:text-surface-200 hover:text-[#2921A3]',
           ]"
         >
-          <span>{{ item.label }}</span>
-        </a>
+          {{ item.label }}
+        </span>
       </router-link>
     </template>
 

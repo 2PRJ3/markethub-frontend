@@ -5,6 +5,7 @@ import SignInView from '@/views/SignInView.vue'
 import ProfilView from '@/views/ProfilView.vue'
 import { useLoginStore } from '@/stores/loginStore'
 import CreateServiceView from '@/views/CreateServiceView.vue'
+import CatalogueView from '@/views/CatalogueView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +38,11 @@ const router = createRouter({
       name: 'createservice',
       component: CreateServiceView,
       meta: { requiresAuth: true },
+    },
+    {
+      path: '/catalogue',
+      name: 'catalogue',
+      component: CatalogueView,
     },
     {
       path: '/about',
