@@ -136,6 +136,7 @@ export const useServiceStore = defineStore('serviceStore', () => {
       loading.value = false
     }
   }
+
   async function fetchServices(params: ServiceListParams = {}): Promise<void> {
     loading.value = true
     try {
@@ -170,6 +171,19 @@ export const useServiceStore = defineStore('serviceStore', () => {
       loading.value = false
     }
   }
+  async function fetchServiceById(id: number): Promise<void> {
+    loading.value = true
+    try {
+      const { data } = await api.get<ServiceRead>(`/services/${id}`)
+      currentService.value = data
+    } catch (error) {
+      console.error('Fetch service failed:', error)
+      currentService.value = null
+      throw error
+    } finally {
+      loading.value = false
+    }
+  }
   return {
     draft,
     pagination,
@@ -186,5 +200,6 @@ export const useServiceStore = defineStore('serviceStore', () => {
     resetDraft,
     createService,
     fetchServices,
+    fetchServiceById,
   }
 })
