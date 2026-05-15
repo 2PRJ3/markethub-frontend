@@ -17,7 +17,7 @@ import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 
 import { storeToRefs } from 'pinia'
-import TheServiceDraft from '@/components/TheServiceDraft.vue'
+import TheServiceDraft from '@/components/services/TheServiceDraft.vue'
 import TheFormError from '@/components/forms/TheFormError.vue'
 
 const categories = [
