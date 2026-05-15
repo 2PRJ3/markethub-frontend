@@ -10,7 +10,6 @@ import type {
   StepKey,
   ServiceCreatePayload,
   ServiceListParams,
-  PaginatedServices,
   ServiceSummary,
 } from '@/types/service'
 interface CloudinaryUploadResponse {
@@ -178,6 +177,6 @@ export const useServiceStore = defineStore('serviceStore', () => {
     setImage,
     resetDraft,
     createService,
-    fetchServices
+    fetchServices,
   }
 })

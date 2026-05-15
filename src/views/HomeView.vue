@@ -11,7 +11,7 @@ const serviceStore = useServiceStore()
 const { services, loading } = storeToRefs(serviceStore)
 
 onMounted(() => {
-  serviceStore.fetchServices({page_size: 4})
+  serviceStore.fetchServices({ page_size: 4 })
 })
 </script>
 
