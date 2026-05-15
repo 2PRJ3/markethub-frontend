@@ -1,8 +1,18 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import TheSearchBar from '@/components/TheSearchBar.vue'
 import TheCard from '@/components/TheCard.vue'
 import TheNavbar from '@/components/TheNavbar.vue'
 import TheBanner from '@/components/TheBanner.vue'
+import { useServiceStore } from '@/stores/serviceStore'
+import { storeToRefs } from 'pinia'
+
+const serviceStore = useServiceStore()
+const { services, loading } = storeToRefs(serviceStore)
+
+onMounted(() => {
+  serviceStore.fetchServices({ page_size: 4 })
+})
 </script>
 
 <template>
@@ -29,8 +39,8 @@ import TheBanner from '@/components/TheBanner.vue'
         </router-link>
       </div>
     </div>
-    <div class="flex items-center md:justify-start justify-center py-5">
-      <TheCard />
+    <div class="flex items-center md:justify-start justify-center py-5 gap-5">
+      <TheCard v-for="service in services" :key="service.id" :service="service" />
     </div>
   </section>
 
@@ -38,6 +48,6 @@ import TheBanner from '@/components/TheBanner.vue'
     title="Vous avez un talent ?"
     description="Commencez à proposer vos services dès aujourd'hui et arrondissez vos fins de mois."
     ctaLabel="Devener vendeur"
-    ctaTo="/login"
+    ctaTo="/create-service"
   />
 </template>
