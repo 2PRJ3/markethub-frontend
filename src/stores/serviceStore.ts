@@ -139,21 +139,28 @@ export const useServiceStore = defineStore('serviceStore', () => {
   async function fetchServices(params: ServiceListParams = {}): Promise<void> {
     loading.value = true
     try {
-      const skip =
-        ((params.page ?? pagination.value.page) - 1) *
-        (params.page_size ?? pagination.value.page_size)
-      const limit = params.page_size ?? pagination.value.page_size
+      const page = params.page ?? pagination.value.page
+      const page_size = params.page_size ?? pagination.value.page_size
+      const skip = (page - 1) * page_size
 
       const { data } = await api.get<ServiceSummary[]>('/services', {
-        params: { skip, limit },
+        params: {
+          skip,
+          limit: page_size,
+          search: params.search || undefined,
+          // category_id: params.category_id?.length ? params.category_id : undefined,
+        },
+        paramsSerializer: { indexes: null },
       })
 
       services.value = data
+
+      const hasNextPage = data.length === page_size
       pagination.value = {
-        page: params.page ?? pagination.value.page,
-        page_size: limit,
-        total: data.length,
-        total_pages: 1,
+        page,
+        page_size,
+        total: hasNextPage ? page * page_size + 1 : (page - 1) * page_size + data.length,
+        total_pages: hasNextPage ? page + 1 : page,
       }
     } catch (error) {
       console.error('Fetch services failed:', error)
@@ -165,6 +172,7 @@ export const useServiceStore = defineStore('serviceStore', () => {
   }
   return {
     draft,
+    pagination,
     services,
     currentStep,
     stepErrors,

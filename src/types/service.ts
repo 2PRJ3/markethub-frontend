@@ -7,7 +7,9 @@ export interface Category {
   name: string
   slug: string
 }
-
+export interface CategoryWithCount extends Category {
+  services_count?: number
+}
 export interface SellerSummary {
   id: number
   first_name: string
