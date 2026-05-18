@@ -57,8 +57,7 @@ onMounted(async () => {
   if (currentOrder.value.status === 'paid' || currentOrder.value.status === 'completed') {
     try {
       await transactionStore.fetchByOrderId(orderId.value)
-    } catch {
-    }
+    } catch {}
   }
 })
 
