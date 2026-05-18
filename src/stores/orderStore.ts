@@ -8,6 +8,7 @@ import type {
   SellerSaleSummary,
   OrderCreatePayload,
   OrderListParams,
+  OrderItemStatus,
   PaymentPayload,
 } from '@/types/order'
 
@@ -63,6 +64,26 @@ export const useOrderStore = defineStore('orderStore', () => {
       return data
     } catch (error) {
       console.error('Paiement échoué', error)
+      throw error
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function updateItemStatus(
+    orderId: number,
+    itemId: number,
+    status: OrderItemStatus,
+  ): Promise<void> {
+    loading.value = true
+    try {
+      await api.patch(`/orders/${orderId}/items/${itemId}/status`, { status })
+      const { data } = await api.get<OrderRead>(`/orders/${orderId}`)
+      if (currentOrder.value && currentOrder.value.id === orderId) {
+        currentOrder.value = data
+      }
+    } catch (error) {
+      console.error('Update item status failed:', error)
       throw error
     } finally {
       loading.value = false
@@ -125,6 +146,7 @@ export const useOrderStore = defineStore('orderStore', () => {
     createOrder,
     fetchOrderById,
     payOrder,
+    updateItemStatus,
     cancelOrder,
     fetchMyOrders,
     fetchMySales,

@@ -18,6 +18,7 @@ import TheDialog from '@/components/TheDialog.vue'
 import TheFormUpdate from '@/components/forms/TheFormUpdate.vue'
 import TheFormPassword from '@/components/forms/TheFormPassword.vue'
 import TheOrderHistoric from '@/components/orders/TheOrderHistoric.vue'
+import TheSellerPanel from '@/components/orders/TheSellerPanel.vue'
 
 const loginStore = useLoginStore()
 const { user } = storeToRefs(loginStore)
@@ -41,7 +42,8 @@ const passwordEditVisible = ref(false)
     <TabList class="flex items-center text-surface-700">
       <Tab value="0" class="text-surface-700">Mon profil</Tab>
       <Tab value="1" class="text-surface-700">Mes services</Tab>
-      <Tab value="2" class="text-surface-700">Historiques des commmandes</Tab>
+      <Tab value="2" class="text-surface-700">Historique de mes ventes</Tab>
+      <Tab value="3" class="text-surface-700">Historiques des commmandes</Tab>
     </TabList>
     <TabPanels>
       <TabPanel value="0">
@@ -118,6 +120,9 @@ const passwordEditVisible = ref(false)
       </TabPanel>
       <TabPanel value="1"> Mes services </TabPanel>
       <TabPanel value="2">
+        <TheSellerPanel/>
+      </TabPanel>
+      <TabPanel value="3">
         <TheOrderHistoric />
       </TabPanel>
     </TabPanels>
