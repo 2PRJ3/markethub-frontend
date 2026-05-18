@@ -49,6 +49,24 @@ const router = createRouter({
       name: 'service-detail',
       component: () => import('@/views/ServiceDetailView.vue'),
     },
+    {
+      path: '/services/:id/order',
+      name: 'order-brief',
+      component: () => import('@/views/OrderBriefView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/orders/:id/pay',
+      name: 'order-pay',
+      component: () => import('@/views/OrderPayView.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/orders/:id/confirmation',
+      name: 'order-confirmation',
+      component: () => import('@/views/OrderConfirmationView.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 })
 
