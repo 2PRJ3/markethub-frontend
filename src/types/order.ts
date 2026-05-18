@@ -78,6 +78,9 @@ export interface OrderListParams {
   limit?: number
 }
 
+export interface OrderItemStatusUpdatePayload {
+  status: OrderItemStatus
+}
 export interface PaymentPayload {
   card_number: string
   card_holder: string
