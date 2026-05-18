@@ -2,7 +2,10 @@ name: CI/CD frontend
 
 on:
   push:
-    branches: [main, dev]
+    branches:
+    - main
+    - dev
+    - "feat/**"
   pull_request:
 
 env:
