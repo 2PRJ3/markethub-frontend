@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import type { ServiceRead } from '@/types/service'
 
@@ -7,10 +8,16 @@ const props = defineProps<{
   service: ServiceRead
 }>()
 
+const router = useRouter()
+
 const formattedPrice = computed(() => {
   const n = Number(props.service.price)
   return Number.isFinite(n) ? n.toFixed(0) : props.service.price
 })
+
+function goToOrder(): void {
+  router.push({ name: 'order-brief', params: { id: props.service.id } })
+}
 </script>
 
 <template>
@@ -20,7 +27,7 @@ const formattedPrice = computed(() => {
     </div>
 
     <div class="space-y-3">
-      <Button label="Ajouter au panier" class="w-full bg-[#3525CD] border-[#3525CD]" />
+      <Button label="Commander" class="w-full bg-[#3525CD] border-[#3525CD]" @click="goToOrder" />
       <Button
         label="Contacter le vendeur"
         outlined

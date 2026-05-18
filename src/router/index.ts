@@ -49,6 +49,12 @@ const router = createRouter({
       name: 'service-detail',
       component: () => import('@/views/ServiceDetailView.vue'),
     },
+    {
+      path: '/services/:id/order',
+      name: 'order-brief',
+      component: () => import('@/views/OrderBriefView.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 })
 
