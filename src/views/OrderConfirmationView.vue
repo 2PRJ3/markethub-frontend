@@ -58,13 +58,13 @@ onMounted(async () => {
         params: { id: currentOrder.value.id },
       })
     } else {
-      router.push({ name: 'my-orders' })
+      router.push({ name: 'profil-user' })
     }
   }
 })
 
 function goToOrders(): void {
-  router.push({ name: 'my-orders' })
+  router.push({ name: 'profil-user' })
 }
 
 function goToCatalogue(): void {

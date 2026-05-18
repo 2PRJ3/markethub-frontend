@@ -2,7 +2,11 @@ name: CI/CD frontend
 
 on:
   push:
-    branches: [main, dev]
+    branches:
+    - main
+    - dev
+    - "feat/**"
+    - "fix/**"
   pull_request:
 
 env:
@@ -68,7 +72,7 @@ jobs:
     name: Build and push docker image
     runs-on: ubuntu-24.04
     needs: build-job
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev')
     permissions:
       contents: read
       packages: write

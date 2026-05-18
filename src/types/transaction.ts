@@ -9,6 +9,7 @@ export interface TransactionRead {
   type: TransactionType
   status: TransactionStatus
   reference: string
+  failure_reason: string | null
   created_at: string
 }
 
