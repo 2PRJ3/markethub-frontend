@@ -51,7 +51,6 @@ onMounted(async () => {
     return
   }
 
-  // Guard: order must be paid or completed
   if (currentOrder.value.status !== 'paid' && currentOrder.value.status !== 'completed') {
     if (currentOrder.value.status === 'pending') {
       router.push({
