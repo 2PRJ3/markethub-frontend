@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import Paginator, { type PageState } from 'primevue/paginator'
 import Skeleton from 'primevue/skeleton'
@@ -9,47 +8,16 @@ import TheSearchBar from '@/components/TheSearchBar.vue'
 import TheFilterSidebar from '@/components/TheFilterSidebar.vue'
 import TheCard from '@/components/TheCard.vue'
 import { useServiceStore } from '@/stores/serviceStore'
+import { useServiceSearch } from '@/composables/useServiceSearch'
 
 const serviceStore = useServiceStore()
 const { services, loading, pagination } = storeToRefs(serviceStore)
 
-const searchQuery = ref('')
-const selectedCategoryIds = ref<number[]>([])
-
-// TODO: remplacer par un store/fetch
-const categories = ref([
-  { id: 1, name: 'Programmation', slug: 'prog' },
-  { id: 2, name: 'Design', slug: 'design' },
-  { id: 3, name: 'Soutien scolaire', slug: 'soutien' },
-  { id: 4, name: 'Rédaction', slug: 'redaction' },
-  { id: 5, name: 'Traduction', slug: 'traduction' },
-])
-
-function loadServices(page: number = 1) {
-  serviceStore.fetchServices({
-    page,
-    page_size: 2,
-    search: searchQuery.value || undefined,
-    // category_id: selectedCategoryIds.value.length ? selectedCategoryIds.value : undefined,
-  })
-}
-
-function handleSearch(query: string) {
-  searchQuery.value = query
-  loadServices(1)
-}
+const { searchInput, selectedCategoryId, setQuery, setCategoryId, setPage } = useServiceSearch()
 
 function handlePageChange(event: PageState) {
-  loadServices(event.page + 1)
+  setPage(event.page + 1)
 }
-
-watch(selectedCategoryIds, () => {
-  loadServices(1)
-})
-
-onMounted(() => {
-  loadServices(1)
-})
 </script>
 
 <template>
@@ -64,11 +32,11 @@ onMounted(() => {
     </div>
 
     <div class="mb-8">
-      <TheSearchBar v-model="searchQuery" @search="handleSearch" />
+      <TheSearchBar :model-value="searchInput" @update:model-value="setQuery" @search="setQuery" />
     </div>
 
     <div class="flex gap-6">
-      <TheFilterSidebar v-model="selectedCategoryIds" :categories="categories" />
+      <TheFilterSidebar :model-value="selectedCategoryId" @update:model-value="setCategoryId" />
 
       <main class="flex-1 min-w-0">
         <div class="flex justify-between items-center mb-4">
@@ -96,6 +64,7 @@ onMounted(() => {
         <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <TheCard v-for="service in services" :key="service.id" :service="service" />
         </div>
+
         <Paginator
           v-if="pagination.total > pagination.page_size"
           :rows="pagination.page_size"

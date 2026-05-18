@@ -148,10 +148,9 @@ export const useServiceStore = defineStore('serviceStore', () => {
         params: {
           skip,
           limit: page_size,
-          search: params.search || undefined,
-          // category_id: params.category_id?.length ? params.category_id : undefined,
+          q: params.q || undefined,
+          category_id: params.category_id || undefined,
         },
-        paramsSerializer: { indexes: null },
       })
 
       services.value = data
