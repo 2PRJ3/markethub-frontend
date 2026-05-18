@@ -120,7 +120,7 @@ const passwordEditVisible = ref(false)
       </TabPanel>
       <TabPanel value="1"> Mes services </TabPanel>
       <TabPanel value="2">
-        <TheSellerPanel/>
+        <TheSellerPanel />
       </TabPanel>
       <TabPanel value="3">
         <TheOrderHistoric />
