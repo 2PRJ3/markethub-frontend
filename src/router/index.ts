@@ -61,6 +61,12 @@ const router = createRouter({
       component: () => import('@/views/OrderPayView.vue'),
       meta: { requiresAuth: true },
     },
+    {
+      path: '/orders/:id/confirmation',
+      name: 'order-confirmation',
+      component: () => import('@/views/OrderConfirmationView.vue'),
+      meta: { requiresAuth: true },
+    },
   ],
 })
 
