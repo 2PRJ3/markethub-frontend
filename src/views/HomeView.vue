@@ -51,7 +51,7 @@ onMounted(() => {
         </router-link>
       </div>
     </div>
-    <div class="flex items-center md:justify-start justify-center py-5 gap-5">
+    <div class="flex items-center justify-center py-5 gap-5">
       <TheCard v-for="service in services" :key="service.id" :service="service" />
     </div>
   </section>
