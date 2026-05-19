@@ -1,19 +1,27 @@
 <script setup lang="ts">
-import Checkbox from 'primevue/checkbox'
+import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import RadioButton from 'primevue/radiobutton'
 import Button from 'primevue/button'
-import type { CategoryWithCount } from '@/types/service'
+import { useCategoriesStore } from '@/stores/categoriesStore'
 
-const props = defineProps<{
-  categories: CategoryWithCount[]
-  modelValue: number[]
+defineProps<{
+  modelValue: number | null
 }>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: number[]]
+  'update:modelValue': [value: number | null]
 }>()
 
-function resetFilters() {
-  emit('update:modelValue', [])
+const categoriesStore = useCategoriesStore()
+const { categories } = storeToRefs(categoriesStore)
+
+onMounted(() => {
+  categoriesStore.fetchCategories()
+})
+
+function resetFilter() {
+  emit('update:modelValue', null)
 }
 </script>
 
@@ -24,10 +32,11 @@ function resetFilters() {
 
       <ul class="flex flex-col gap-3">
         <li v-for="category in categories" :key="category.id" class="flex items-center gap-2">
-          <Checkbox
+          <RadioButton
             :inputId="`cat-${category.id}`"
             :value="category.id"
             :modelValue="modelValue"
+            name="category"
             @update:modelValue="emit('update:modelValue', $event)"
           />
           <label
@@ -40,14 +49,14 @@ function resetFilters() {
       </ul>
 
       <Button
-        v-if="modelValue.length > 0"
+        v-if="modelValue !== null"
         label="Réinitialiser"
         severity="secondary"
         text
         size="small"
         icon="pi pi-times"
         class="mt-4 w-full"
-        @click="resetFilters"
+        @click="resetFilter"
       />
     </div>
   </aside>

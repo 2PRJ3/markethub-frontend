@@ -1,14 +1,26 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import TheSearchBar from '@/components/TheSearchBar.vue'
 import TheCard from '@/components/TheCard.vue'
 import TheNavbar from '@/components/TheNavbar.vue'
 import TheBanner from '@/components/TheBanner.vue'
 import { useServiceStore } from '@/stores/serviceStore'
-import { storeToRefs } from 'pinia'
 
+const router = useRouter()
 const serviceStore = useServiceStore()
 const { services, loading } = storeToRefs(serviceStore)
+
+const searchQuery = ref('')
+
+function handleSearch(query: string) {
+  const trimmed = query.trim()
+  router.push({
+    name: 'catalogue',
+    query: trimmed.length >= 2 ? { q: trimmed } : {},
+  })
+}
 
 onMounted(() => {
   serviceStore.fetchServices({ page_size: 4 })
@@ -25,7 +37,7 @@ onMounted(() => {
     >
       Trouvez les services parfaits pour vos projets étudiants
     </h1>
-    <TheSearchBar />
+    <TheSearchBar v-model="searchQuery" @search="handleSearch" />
   </section>
 
   <section class="flex flex-col gap-5 px-8 pr-8">
@@ -33,7 +45,7 @@ onMounted(() => {
       <h2 class="font-bold text-2xl">Nos services</h2>
       <div class="flex justify-between">
         <span class="text-[#464555]">Découvrez ce que la communauté vous propose.</span>
-        <router-link to="/" class="hidden md:flex md:items-end gap-1 text-[#3525CD]">
+        <router-link to="/catalogue" class="hidden md:flex md:items-end gap-1 text-[#3525CD]">
           <span class="text-sm">Voir tout</span>
           <i class="pi pi-arrow-right" />
         </router-link>

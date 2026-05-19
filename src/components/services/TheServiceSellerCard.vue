@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
 import Avatar from 'primevue/avatar'
 import avatarDefault from '@/assets/pictures/avatar.png'
-import type { SellerSummary } from '@/types/service'
+import type { SellerSummary, ServiceSummary } from '@/types/service'
 
 const props = defineProps<{
   seller: SellerSummary | null | undefined
   createdAt: string
 }>()
+
+const router = useRouter()
 
 const sellerName = computed(() => {
   if (!props.seller) return 'Anonyme'
@@ -28,6 +31,11 @@ const memberSince = computed(() => {
     year: 'numeric',
   })
 })
+function goToSellerProfile(): void {
+  if (props.seller?.id) {
+    router.push(`/users/${props.seller.id}`)
+  }
+}
 </script>
 
 <template>
@@ -49,7 +57,13 @@ const memberSince = computed(() => {
       <p class="text-xs text-slate-500 mb-4">Membre depuis {{ memberSince }}</p>
 
       <div class="flex gap-3">
-        <Button label="Voir le profil" severity="secondary" outlined size="small" />
+        <Button
+          label="Voir le profil"
+          severity="secondary"
+          outlined
+          size="small"
+          @click="goToSellerProfile"
+        />
         <Button label="Envoyer un message" outlined size="small" severity="info" />
       </div>
     </div>

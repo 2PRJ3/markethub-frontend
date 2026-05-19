@@ -89,7 +89,7 @@ export interface StepValidation {
 export interface ServiceListParams {
   page?: number
   page_size?: number
-  search?: string
+  q?: string
   category_id?: number
   status?: ServiceStatus
 }
