@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import Card from 'primevue/card'
 import Tag from 'primevue/tag'
 import Avatar from 'primevue/avatar'
@@ -12,6 +13,8 @@ import type { ServiceSummary } from '@/types/service'
 const props = defineProps<{
   service: ServiceSummary
 }>()
+
+const router = useRouter()
 
 const formattedPrice = computed(() => {
   const n = Number(props.service.price)
@@ -33,15 +36,25 @@ const sellerAvatar = computed(() => {
 const ratingDisplay = computed(() =>
   props.service.average_rating !== null ? props.service.average_rating.toFixed(1) : '—',
 )
+
+function goToService(): void {
+  router.push(`/services/${props.service.id}`)
+}
+
+function goToSellerProfile(): void {
+  if (props.service.seller?.id) {
+    router.push(`/users/${props.service.seller.id}`)
+  }
+}
 </script>
 
 <template>
-  <RouterLink :to="`/services/${props.service.id}`">
+  <div @click="goToService" class="cursor-pointer">
     <Card
       :pt="{
         root: {
           class:
-            'overflow-hidden rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer',
+            'overflow-hidden rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200',
         },
         body: { class: 'p-0' },
         header: { class: 'p-0' },
@@ -66,7 +79,10 @@ const ratingDisplay = computed(() =>
 
       <template #content>
         <div class="px-4 pt-4 pb-3">
-          <div class="flex items-center gap-2 mb-3">
+          <div
+            class="flex items-center gap-2 mb-3 hover:underline w-fit"
+            @click.stop="goToSellerProfile"
+          >
             <Avatar :image="sellerAvatar" shape="circle" size="normal" />
             <span class="text-sm text-slate-600 font-medium">{{ sellerName }}</span>
           </div>
@@ -100,5 +116,5 @@ const ratingDisplay = computed(() =>
         </div>
       </template>
     </Card>
-  </RouterLink>
+  </div>
 </template>
